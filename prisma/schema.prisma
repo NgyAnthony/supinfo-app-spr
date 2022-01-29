@@ -1,0 +1,40 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model points {
+  Login         String  @id @unique(map: "Login") @db.VarChar(100)
+  JPO1          String? @db.VarChar(100)
+  JPO2          String? @db.VarChar(100)
+  JPO3          String? @db.VarChar(100)
+  JPO4          String? @db.VarChar(100)
+  JPO5          String? @db.VarChar(100)
+  JPO6          String? @db.VarChar(100)
+  JPO7          String? @db.VarChar(100)
+  JPO8          String? @db.VarChar(100)
+  SOIR_JPO1     String? @db.VarChar(100)
+  MEP1          String? @db.VarChar(100)
+  MEP2          String? @db.VarChar(100)
+  MEP3          String? @db.VarChar(100)
+  MEP_4         String? @db.VarChar(100)
+  MEP_5         String? @db.VarChar(100)
+  MEP_6         String? @db.VarChar(100)
+  MEP_7         String? @db.VarChar(100)
+  MEP_8         String? @db.VarChar(100)
+  SALON_1       String? @db.VarChar(100)
+  SALON_2       String? @db.VarChar(100)
+  SALON_3       String? @db.VarChar(100)
+  SALON_4       String? @db.VarChar(100)
+  SALON_5       String? @db.VarChar(100)
+  SALON_6       String? @db.VarChar(100)
+  LYCEE_NOV_DEC String? @db.VarChar(100)
+  BDE_BDS_SPR   String? @db.VarChar(100)
+  PENALITES     String? @db.VarChar(100)
+}
