@@ -110,7 +110,7 @@ export default function Home({ user, points }) {
                     height={150}
                 />
                 <Text fontSize='2xl' mb={4} mt={4}>Bienvenue sur l'outil de consultation des points XLIF du SPR Lyon.</Text>
-                <Text fontSize='md' mb={4} mt={4}>Inscrivez-vous, puis connectez-vous avec votre adresse SUPINFO afin de pouvoir voir vos points XLIF.</Text>
+                <Text fontSize='md' mb={4} mt={4}>Inscrivez-vous, puis connectez-vous avec votre adresse SUPINFO afin de pouvoir consulter vos points XLIF.</Text>
 
                 <Link href={"/api/auth/login"}>
                     <Button colorScheme='blue'>Se connecter / Inscription</Button>
