@@ -18,6 +18,7 @@ import {
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import Image from 'next/image'
 import logoSupinfo from '../public/logo-supinfo.png'
+import { LoginOutlined, FormOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 
 function convert(obj) {
     return Object.keys(obj).map(key => ({
@@ -61,7 +62,7 @@ export default function Home({ user, points }) {
                     width={150}
                     height={150}
                 />
-                <Heading mt={6}>Profil</Heading>
+                <Heading mt={6}><UserOutlined /> Profil</Heading>
                 <Text fontSize='2xl'>Bonjour, {user.name}</Text>
                 <Divider mb={4} mt={4}/>
                 <Text fontSize='md'>XLIF est une matière vous rapportant 3 crédits ECTS. Vous validez la matière en ayant au minimum 10 points sur 20. Chaque évènement (Journée Portes Ouvertes, Salon étudiant, accompagnement étudiant, visite lycée...) vous rapporte un nombre de points.</Text>
@@ -95,8 +96,10 @@ export default function Home({ user, points }) {
                     </Tfoot>
                 </Table>
 
-                <Link href={"/api/auth/logout"}>
-                    <Button colorScheme='blue'>Se déconnecter</Button>
+                <Link href={"/api/auth/logout"} style={{ textDecoration: 'none' }}>
+                    <Button colorScheme='blue'>
+                        <Text mr={1}>Se déconnecter</Text> <LogoutOutlined />
+                    </Button>
                 </Link>
             </Container>
         )
@@ -111,11 +114,15 @@ export default function Home({ user, points }) {
                 />
                 <Text fontSize='2xl' mb={4} mt={4}>Bienvenue sur l'outil de consultation des points XLIF du SPR Lyon.</Text>
                 <Text fontSize='md' mb={4} mt={4}>Inscrivez-vous, puis connectez-vous avec votre adresse SUPINFO afin de pouvoir consulter vos points XLIF.</Text>
-                <Link href={"/api/auth/login"}>
-                    <Button colorScheme='blue'>Se connecter</Button>
+                <Link href={"/api/auth/login"} style={{ textDecoration: 'none' }}>
+                    <Button colorScheme='blue'>
+                        <LoginOutlined /><Text ml={1}> Se connecter</Text>
+                    </Button>
                 </Link>
-                <Link href={"/api/signup"} ml={4}>
-                    <Button colorScheme='blue'>Inscription</Button>
+                <Link href={"/api/signup"} ml={4} style={{ textDecoration: 'none' }}>
+                    <Button colorScheme='blue'>
+                        <FormOutlined /><Text ml={1}> Inscription</Text>
+                    </Button>
                 </Link>
             </Container>
         )
