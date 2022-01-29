@@ -136,8 +136,6 @@ export async function getServerSideProps(ctx) {
     const fetchPointsBody = {
         user: session?.user
     }
-    console.log(process.env.API_URL)
-    console.log('check url')
     const points = await fetch( process.env.API_URL + `/user/points/`, {
         method: 'POST',
         headers: {
