@@ -120,7 +120,7 @@ export default function Home({ user, points }) {
                     </Button>
                 </Link>
                 <Link href={"/api/signup"} ml={4} style={{ textDecoration: 'none' }}>
-                    <Button colorScheme='blue'>
+                    <Button colorScheme='teal'>
                         <FormOutlined /><Text ml={1}> Inscription</Text>
                     </Button>
                 </Link>
