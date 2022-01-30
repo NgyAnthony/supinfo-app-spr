@@ -15,7 +15,7 @@ import {
     Thead,
     Tr, useToast
 } from '@chakra-ui/react'
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, ButtonGroup, chakra } from '@chakra-ui/react'
 import Image from 'next/image'
 import logoSupinfo from '../public/logo-supinfo.png'
 import { LoginOutlined, FormOutlined, LogoutOutlined, UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
@@ -160,7 +160,21 @@ export default function Home({ user, points }) {
                     height={150}
                 />
                 <Text fontSize='2xl' mb={4} mt={4}>Bienvenue sur l'outil de consultation des points XLIF du SPR Lyon.</Text>
-                <Text fontSize='md' mb={4} mt={4}>Inscrivez-vous, puis connectez-vous avec votre adresse SUPINFO afin de pouvoir consulter vos points XLIF.</Text>
+                <Text fontSize='md' mb={4} mt={4}>Inscrivez-vous, puis connectez-vous avec votre
+                    <chakra.span
+                        bgGradient="linear(to-l, #7928CA, #FF0080)"
+                        bgClip="text"
+                        fontSize="md"
+                        fontWeight="extrabold"
+                    > adresse SUPINFO</chakra.span> <MailOutlined /> afin de pouvoir consulter vos points
+                    <chakra.span
+                        bgGradient="linear(to-l, #7928CA, #FF0080)"
+                        bgClip="text"
+                        fontSize="md"
+                        fontWeight="extrabold"
+                    > XLIF.
+                    </chakra.span>
+                    </Text>
                 <Link href={"/api/auth/login"} style={{ textDecoration: 'none' }}>
                     <Button leftIcon={<LoginOutlined />} colorScheme='blue'>Se connecter</Button>
                 </Link>
