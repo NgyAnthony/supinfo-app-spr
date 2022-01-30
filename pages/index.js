@@ -1,6 +1,6 @@
 import { getSession } from '@auth0/nextjs-auth0';
 import {
-    Badge,
+    Badge, Box,
     Container, Divider,
     Heading,
     Link,
@@ -89,10 +89,16 @@ export default function Home({ user, points }) {
                     />
                     <Heading mt={6}><LockOutlined /> Validez votre email.</Heading>
                     <Text fontSize='2xl'>Bonjour, {user.name}. Veuillez valider votre email. Vérifiez vos spams.</Text>
-                    <Button leftIcon={<MailOutlined />} mt={4} isLoading={emailVerificationLoading}
-                            colorScheme='teal' variant='solid' onClick={handleClick}>
-                        Renvoyer le mail de vérification
-                    </Button>
+                    <Box mt={4}>
+                        <Button leftIcon={<MailOutlined />} isLoading={emailVerificationLoading}
+                                colorScheme='teal' variant='solid' onClick={handleClick}>
+                            Renvoyer le mail de vérification
+                        </Button>
+
+                        <Link href={"/api/auth/logout"} style={{ textDecoration: 'none' }} ml={2}>
+                            <Button rightIcon={<LogoutOutlined />} colorScheme='blue'>Se déconnecter</Button>
+                        </Link>
+                    </Box>
                 </Container>
             )
         } else {
