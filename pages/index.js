@@ -13,12 +13,13 @@ import {
     Tfoot,
     Th,
     Thead,
-    Tr
+    Tr, useToast
 } from '@chakra-ui/react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import Image from 'next/image'
 import logoSupinfo from '../public/logo-supinfo.png'
-import { LoginOutlined, FormOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginOutlined, FormOutlined, LogoutOutlined, UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import {useState} from "react";
 
 function convert(obj) {
     return Object.keys(obj).map(key => ({
@@ -53,56 +54,96 @@ const getValidatedOrNot = (sumOfPoints) => {
 
 export default function Home({ user, points }) {
     const sumOfPoints = sumPoints(points)
-    if (user) {
-        return (
-            <Container p={6}>
-                <Image
-                    src={logoSupinfo}
-                    alt="Logo de Supinfo"
-                    width={150}
-                    height={150}
-                />
-                <Heading mt={6}><UserOutlined /> Profil</Heading>
-                <Text fontSize='2xl'>Bonjour, {user.name}</Text>
-                <Divider mb={4} mt={4}/>
-                <Text fontSize='md'>XLIF est une matière vous rapportant 3 crédits ECTS. Vous validez la matière en ayant au minimum 10 points sur 20. Chaque évènement (Journée Portes Ouvertes, Salon étudiant, accompagnement étudiant, visite lycée...) vous rapporte un nombre de points.</Text>
-                <Divider mb={4} mt={4}/>
-                <Text fontSize='xl'>Voici votre relevé de points XLIF (dernière MAJ le 29 Janvier)</Text>
-                {
-                    getValidatedOrNot(sumOfPoints)
-                }
-                <Table size='sm' mt={4} mb={4}>
-                    <Thead>
-                        <Tr>
-                            <Th>Évènement</Th>
-                            <Th isNumeric>Points acquis</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {points.map(x => {
-                            return (
-                                <Tr key={x.eventName}>
-                                    <Td>{x.eventName}</Td>
-                                    <Td isNumeric>{x.value}</Td>
-                                </Tr>
-                            )
-                        })}
-                    </Tbody>
-                    <Tfoot>
-                        <Tr>
-                            <Th>Total:</Th>
-                            <Th isNumeric>{sumOfPoints}</Th>
-                        </Tr>
-                    </Tfoot>
-                </Table>
+    const toast = useToast()
+    const [emailVerificationLoading, setEmailVerificationLoading] = useState(false)
+    const handleClick = async () => {
+        setEmailVerificationLoading(true)
+        const emailJob = await fetch( `/api/send-verification-email/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await emailJob.json();
+        if (data) {
+            setEmailVerificationLoading(false)
+            toast({
+                title: 'Mail envoyé !',
+                description: "Le mail a été envoyé, vérifiez vos spams !",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        }
+    }
 
-                <Link href={"/api/auth/logout"} style={{ textDecoration: 'none' }}>
-                    <Button colorScheme='blue'>
-                        <Text mr={1}>Se déconnecter</Text> <LogoutOutlined />
+    if (user) {
+        if (!user.email_verified){
+            return (
+                <Container p={6}>
+                    <Image
+                        src={logoSupinfo}
+                        alt="Logo de Supinfo"
+                        width={150}
+                        height={150}
+                    />
+                    <Heading mt={6}><LockOutlined /> Validez votre email.</Heading>
+                    <Text fontSize='2xl'>Bonjour, {user.name}. Veuillez valider votre email. Vérifiez vos spams.</Text>
+                    <Button leftIcon={<MailOutlined />} mt={4} isLoading={emailVerificationLoading}
+                            colorScheme='teal' variant='solid' onClick={handleClick}>
+                        Renvoyer le mail de vérification
                     </Button>
-                </Link>
-            </Container>
-        )
+                </Container>
+            )
+        } else {
+            return (
+                <Container p={6}>
+                    <Image
+                        src={logoSupinfo}
+                        alt="Logo de Supinfo"
+                        width={150}
+                        height={150}
+                    />
+                    <Heading mt={6}><UserOutlined /> Profil</Heading>
+                    <Text fontSize='2xl'>Bonjour, {user.name}</Text>
+                    <Divider mb={4} mt={4}/>
+                    <Text fontSize='md'>XLIF est une matière vous rapportant 3 crédits ECTS. Vous validez la matière en ayant au minimum 10 points sur 20. Chaque évènement (Journée Portes Ouvertes, Salon étudiant, accompagnement étudiant, visite lycée...) vous rapporte un nombre de points.</Text>
+                    <Divider mb={4} mt={4}/>
+                    <Text fontSize='xl'>Voici votre relevé de points XLIF (dernière MAJ le 29 Janvier)</Text>
+                    {
+                        getValidatedOrNot(sumOfPoints)
+                    }
+                    <Table size='sm' mt={4} mb={4}>
+                        <Thead>
+                            <Tr>
+                                <Th>Évènement</Th>
+                                <Th isNumeric>Points acquis</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {points.map(x => {
+                                return (
+                                    <Tr key={x.eventName}>
+                                        <Td>{x.eventName}</Td>
+                                        <Td isNumeric>{x.value}</Td>
+                                    </Tr>
+                                )
+                            })}
+                        </Tbody>
+                        <Tfoot>
+                            <Tr>
+                                <Th>Total:</Th>
+                                <Th isNumeric>{sumOfPoints}</Th>
+                            </Tr>
+                        </Tfoot>
+                    </Table>
+
+                    <Link href={"/api/auth/logout"} style={{ textDecoration: 'none' }}>
+                        <Button rightIcon={<LogoutOutlined />} colorScheme='blue'>Se déconnecter</Button>
+                    </Link>
+                </Container>
+            )
+        }
     } else {
         return (
             <Container p={6}>
@@ -115,14 +156,10 @@ export default function Home({ user, points }) {
                 <Text fontSize='2xl' mb={4} mt={4}>Bienvenue sur l'outil de consultation des points XLIF du SPR Lyon.</Text>
                 <Text fontSize='md' mb={4} mt={4}>Inscrivez-vous, puis connectez-vous avec votre adresse SUPINFO afin de pouvoir consulter vos points XLIF.</Text>
                 <Link href={"/api/auth/login"} style={{ textDecoration: 'none' }}>
-                    <Button colorScheme='blue'>
-                        <LoginOutlined /><Text ml={1}> Se connecter</Text>
-                    </Button>
+                    <Button leftIcon={<LoginOutlined />} colorScheme='blue'>Se connecter</Button>
                 </Link>
                 <Link href={"/api/signup"} ml={4} style={{ textDecoration: 'none' }}>
-                    <Button colorScheme='teal'>
-                        <FormOutlined /><Text ml={1}> Inscription</Text>
-                    </Button>
+                    <Button leftIcon={<FormOutlined />} colorScheme='teal'>Inscription</Button>
                 </Link>
             </Container>
         )
@@ -136,6 +173,7 @@ export async function getServerSideProps(ctx) {
     const fetchPointsBody = {
         user: session?.user
     }
+
     const points = await fetch( process.env.API_URL + `/user/points/`, {
         method: 'POST',
         headers: {
@@ -143,6 +181,7 @@ export async function getServerSideProps(ctx) {
         },
         body: JSON.stringify(fetchPointsBody),
     });
+
     const data = await points.json();
     let eventArray = convert(data)
 

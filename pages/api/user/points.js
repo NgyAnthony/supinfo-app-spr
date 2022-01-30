@@ -1,13 +1,13 @@
-import { PrismaClient } from '@prisma/client'
+import CommonDataManager from "../../../services/common-data-manager";
 
 export default async function handler(req, res) {
-    const prisma = new PrismaClient()
-    if (req.body.user != null) {
+    const prisma = CommonDataManager.getInstance().getPrismaClient()
 
+    if (req.body.user != null && req.body.user.email_verified) {
         let existsCount = await prisma.points.count(
             {
                 where: {
-                    Login: req.body.user.name
+                    Login: req.body.user.email
                 }
             }
         )
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         if (existsCount === 1) {
             const user_points = await prisma.points.findUnique({
                 where: {
-                    Login: req.body.user.name
+                    Login: req.body.user.email
                 }
             })
 
