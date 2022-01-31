@@ -160,7 +160,13 @@ export default function Home({ user, points }) {
                     height={150}
                 />
                 <Text fontSize='2xl' mb={4} mt={4}>Bienvenue sur l'outil de consultation des points XLIF du SPR Lyon.</Text>
-                <Text fontSize='md' mb={4} mt={4}>Inscrivez-vous, puis connectez-vous avec votre
+                <Text fontSize='md' mb={4} mt={4}>
+                    <chakra.span
+                        bgGradient="linear(to-l, #7928CA, #FF0080)"
+                        bgClip="text"
+                        fontSize="md"
+                        fontWeight="extrabold"
+                    >Inscrivez-vous</chakra.span>, puis connectez-vous avec votre
                     <chakra.span
                         bgGradient="linear(to-l, #7928CA, #FF0080)"
                         bgClip="text"
