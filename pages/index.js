@@ -47,7 +47,7 @@ const getValidatedOrNot = (sumOfPoints) => {
         )
     } else {
         return (
-            <Badge colorScheme='red'>Il vous manque encore {20 - sumOfPoints} pour valider.</Badge>
+            <Badge colorScheme='red'>Il vous manque encore {10 - sumOfPoints} pour valider.</Badge>
         )
     }
 }
@@ -113,7 +113,7 @@ export default function Home({ user, points }) {
                     <Heading mt={6}><UserOutlined /> Profil</Heading>
                     <Text fontSize='2xl'>Bonjour, {user.name}</Text>
                     <Divider mb={4} mt={4}/>
-                    <Text fontSize='md'>XLIF est une matière vous rapportant 3 crédits ECTS. Vous validez la matière en ayant au minimum 10 points sur 20. Chaque évènement (Journée Portes Ouvertes, Salon étudiant, accompagnement étudiant, visite lycée...) vous rapporte un nombre de points.</Text>
+                    <Text fontSize='md'>XLIF est une matière vous rapportant 3 crédits ECTS. Vous validez la matière en ayant au minimum 10 points sur 20. Chaque évènement (Journée Portes Ouvertes, salon étudiant, accompagnement étudiant, visite lycée...) vous rapporte un nombre de points.</Text>
                     <Divider mb={4} mt={4}/>
                     <Text fontSize='xl'>Voici votre relevé de points XLIF (dernière MAJ le 29 Janvier)</Text>
                     {
