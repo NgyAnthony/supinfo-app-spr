@@ -112,14 +112,21 @@ export default function Home({ user, points }) {
                     />
                     <Heading mt={6}><UserOutlined /> Profil</Heading>
                     <Text fontSize='2xl'>Bonjour, {user.name}</Text>
+                    <Text fontSize='md' as='i'>Contactez teamspr@mail.supinfo.com en cas d'anomalie.</Text>
                     <Divider mb={4} mt={4}/>
                     <Text fontSize='md'>XLIF est une matière vous rapportant 3 crédits ECTS. Vous validez la matière en ayant au minimum 10 points sur 20. Chaque évènement (Journée Portes Ouvertes, salon étudiant, accompagnement étudiant, visite lycée...) vous rapporte un nombre de points.</Text>
                     <Divider mb={4} mt={4}/>
                     <Text fontSize='xl'>Voici votre relevé de points XLIF (dernière MAJ le 29 Janvier)</Text>
-                    <Text fontSize='md' as='i'>Contactez teamspr@mail.supinfo.com en cas d'anomalie.</Text>
                     {
                         getValidatedOrNot(sumOfPoints)
                     }
+                    <Text
+                        bgGradient="linear(to-l, #7928CA, #FF0080)"
+                        bgClip="text"
+                        fontSize="xl"
+                        fontWeight="extrabold"
+                    >Vous avez {sumOfPoints} points XLIF.</Text>
+
                     <Table size='sm' mt={4} mb={4}>
                         <Thead>
                             <Tr>
